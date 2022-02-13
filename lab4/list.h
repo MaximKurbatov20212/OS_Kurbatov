@@ -26,6 +26,7 @@ void free_list(Node* list) {
     while(list != NULL) {
         Node* tmp = list;
         list = list->next;    
+        free(tmp->data);
         free(tmp);
     }
 }
