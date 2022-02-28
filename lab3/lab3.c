@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#define SUCCSESS 0
+#define SUCCESS 0
 #define ERROR_OPENING_FILE 1 
 #define ERROR_CLOSING_FILE 2
 #define CAN_NOT_CHANGE_EFF_ID 3
@@ -26,7 +26,7 @@ int open_file() {
         perror("Couldn't close file");
         return ERROR_CLOSING_FILE;
     }
-    return SUCCSESS;
+    return SUCCESS;
 }
 
 int main() {
