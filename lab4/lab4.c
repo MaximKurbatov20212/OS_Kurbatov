@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #include "list.h"
 
 char* scan_info() {
@@ -9,13 +11,11 @@ char* scan_info() {
         fprintf(stderr, "Couldn't allocate memory");
         return NULL;   
     }
-
     return data;
 }
 
 int main() {
     Node* list = NULL;
-    int err = SUCCESS;
     char* data = scan_info();
 
     if(data == NULL) {
@@ -24,10 +24,8 @@ int main() {
     }
 
     while(data[0] != '.') {
-        list = insert(list, data, &err);
-
-        if(err == ERROR) break;
-
+        Node* ret_ptr = insert(&list, data);
+        if(ret_ptr == NULL) break;
         data = scan_info();
 
         if(data == NULL) break;
