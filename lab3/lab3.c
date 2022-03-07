@@ -3,14 +3,15 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+#define SETUID_ERROR -1
 #define SUCCESS 0
 #define ERROR_OPENING_FILE 1 
 #define ERROR_CLOSING_FILE 2
 #define CAN_NOT_CHANGE_EFF_ID 3
 
 void print_real_effective_id(){
-    printf("Real User ID = %d\n",getuid());
-    printf("Effective User ID = %d\n\n",geteuid());
+    printf("Real User ID = %d\n", getuid());
+    printf("Effective User ID = %d\n\n", geteuid());
 }
 
 int open_file() {
@@ -21,8 +22,8 @@ int open_file() {
         return ERROR_OPENING_FILE;
     }
 
-    int flag = fclose(file);
-    if(flag == 0) {
+    int result_fclose = fclose(file);
+    if(flag == EOF) {
         perror("Couldn't close file");
         return ERROR_CLOSING_FILE;
     }
@@ -30,15 +31,15 @@ int open_file() {
 }
 
 int main() {
-    int err = 0;
+    int err = SUCCESS;
     print_real_effective_id();
     err = open_file();
 
-    if(err) return err;
+    if(err != SUCCES) return err;
 
-    int flag = setuid(getuid()); 
+    int result_setuid = setuid(getuid()); 
 
-    if(flag == -1) {
+    if(result_setuid == SETUID_ERROR) {
         perror("Couldn't set same id");
         return CAN_NOT_CHANGE_EFF_ID; 
     }
@@ -46,7 +47,7 @@ int main() {
     print_real_effective_id();
     err = open_file();
 
-    if(err) return err;
+    if(err != SUCCESS) return err;
 
     return 0;
 };
