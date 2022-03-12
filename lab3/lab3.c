@@ -33,14 +33,14 @@ int open_file() {
     FILE* file = fopen("test.txt", "r");
 
     if(file == NULL){
-        perror("Couldn't open file\n\n");
+        perror("Couldn't open file");
         return ERROR_OPENING_FILE;
     }
 
     int fclose_result = fclose(file);
     // EOF - end of file - код ошибки, если файл не удалось закрыть
     if(fclose_result == EOF) {
-        perror("Couldn't close file\n\n");
+        perror("Couldn't close file");
         return ERROR_CLOSING_FILE;
     }
 
@@ -60,7 +60,7 @@ int main() {
     int setuid_result = setuid(getuid());
 
     if(setuid_result == ERROR_CHANGING_EFF_ID) {
-        perror("Couldn't set effective id\n");
+        perror("Couldn't set effective id");
         // Результат второго открытия не поменяется, так что возвращаем код ошибки
         return ERROR_CHANGING_EFF_ID;
     }
