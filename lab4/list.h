@@ -1,15 +1,16 @@
 #ifndef LIST
 #define LIST
 
-typedef struct List {
+// Здесь исправил название структуры и сделал указатель на следующий узел(раньше был указатель на list)
+typedef struct Node {
     char* data;
-    struct List* next;
+    struct Node* next;
 } Node;
 
 Node* create_node(char* data);
-Node* add_node(Node* root, Node* node);
-Node* insert(Node** root, char* data);
-void free_list(Node* list);
-void print_list(Node* list);
+Node* add_node(Node* head, struct Node* node);
+Node* insert(Node** head, char* data);
+void free_list(Node* head);
+void print_list(Node* head);
 
 #endif 

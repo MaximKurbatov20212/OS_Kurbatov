@@ -1,8 +1,7 @@
-#include "list.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "list.h"
 
 Node* create_node(char* data) {
     Node* node = (Node*)malloc(sizeof(Node));
@@ -19,48 +18,47 @@ Node* create_node(char* data) {
         free(node);
         return NULL;
     }
-
+    
     strcpy(node->data, data);
     node->next = NULL;
     return node;
 }
 
-Node* add_node(Node* root, Node* node) {
-    if(root == NULL) return node;
+Node* add_node(Node* head, Node* node) {
 
-    Node* list = root; 
-    while(list->next != NULL) {
-        list = list->next;    
+    Node* copy_head = head; 
+    while(copy_head->next != NULL) {
+        copy_head = copy_head->next;    
     }
-    list->next = node;
-    return root;
+    copy_head->next = node;
+    return node;
 }
 
-Node* insert(Node** root, char* data) {
+Node* insert(Node** head, char* data) {
     Node* node = create_node(data);
     if(node == NULL) return NULL;
 
-    if(*root == NULL) {
-        *root = node;
+    if(*head == NULL) {
+        *head = node;
         return node;
     }
 
-    add_node(*root, node);
-    return *root;
+    add_node(*head, node);
+    return node;
 }
 
-void free_list(Node* list) {
-    while(list != NULL) {
-        Node* tmp = list;
-        list = list->next;    
-        free(tmp->data);
-        free(tmp);
+void free_list(Node* head) {
+    while(head != NULL) {
+        Node* current_node = head;
+        head = head->next;    
+        free(current_node->data);
+        free(current_node);
     }
 }
 
-void print_list(Node* list) {
-    while(list != NULL) {
-        printf("%s", list->data);
-        list = list->next;    
+void print_list(Node* head) {
+    while(head != NULL) {
+        printf("%s", head->data);
+        head = head->next;    
     }
 }
