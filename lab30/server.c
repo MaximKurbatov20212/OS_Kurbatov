@@ -52,7 +52,7 @@ int main() {
 
     memset(&addr, 0, sizeof(addr));
 
-    // получаем фаловый дескриптор сокета
+    // получаем файловый дескриптор сокета
     int server_fd = socket(AF_LOCAL, SOCK_STREAM, DEFAULT_PROTOCOL);
 
     if (server_fd == SOCKET_ERROR) {
