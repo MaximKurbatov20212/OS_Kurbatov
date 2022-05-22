@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 
 #define SUCCESS 0
 #define SOCKET_ERROR -1
@@ -14,11 +15,15 @@
 #define CLOSE_ERROR -1
 #define ERROR 1
 #define EOF_OR_FGETS_ERROR NULL
+#define SIGSET_ERROR -1
 
 #define MAX_BUF 256
 
 #define DEFAULT_PROTOCOL 0
 
+void sighandler(int sig) {
+    fprintf(stderr, "Server unreachable\n");
+}
 
 // создаем сокет, для локального общения
 int get_socket() {
@@ -50,6 +55,12 @@ int write_in_socket(int file_descriptor) {
 
 int main() {
     struct sockaddr_un addr; // адрес сокета
+
+    void* sigset_result = sigset(SIGPIPE, sighandler);
+    if (sigset_result == SIG_ERR){
+        perror("sigset");
+        return ERROR;
+    }
 
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_LOCAL;
