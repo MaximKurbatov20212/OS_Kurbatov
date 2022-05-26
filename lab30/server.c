@@ -93,6 +93,7 @@ int main() {
     int close_result = close(server_fd);
     if (close_result == CLOSE_ERROR) {
         perror("couldn't close");
+        close(client_fd); 
         return ERROR;
     }
 
@@ -106,7 +107,7 @@ int main() {
     // закрываем сокет клиента
     close_result = close(client_fd); 
     if (close_result == CLOSE_ERROR) {
-        perror("couldn'tclose");
+        perror("couldn't close");
         return ERROR;
     }
 
