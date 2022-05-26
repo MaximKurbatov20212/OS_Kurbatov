@@ -68,6 +68,7 @@ int main() {
     int bind_result = bind(server_fd, (const struct sockaddr *) &addr, sizeof(addr));
     if (bind_result == BIND_ERROR) {
         perror("couldn't bind");
+        close(server_fd);
         return ERROR;
     }
 
@@ -75,6 +76,7 @@ int main() {
     int listen_result = listen(server_fd, MAX_LEN);
     if (listen_result == LISTEN_ERROR) {
         perror("couldn't listen");
+        close(server_fd);
         return ERROR;
     }
 
@@ -82,6 +84,7 @@ int main() {
     int client_fd = accept(server_fd, NULL, NULL);
     if (client_fd == ACCEPT_ERROR) {
         perror("couldn't accept");
+        close(server_fd);
         return ERROR;
     }
 
